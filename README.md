@@ -1,6 +1,6 @@
 # Weemo Android SDK and Sample Application
 
-This repository contains the Weemo Android SDK and a sample application `sdk-helper` which provides an implementation model to help developers integrate the SDK. More information about Weemo SDKs can be found at [http://www.weemo.com/](http://www.weemo.com/)
+This repository contains the Weemo Android SDK and a sample application `Helper` which provides an implementation model to help developers integrate the SDK. More information about Weemo SDKs can be found at [http://www.weemo.com/](http://www.weemo.com/)
 
 
 The use cases have been minimized in order to reduce the integration effort while creating a functional model for the POC that covers most of the use cases for audio and video during 1:1 calls.
