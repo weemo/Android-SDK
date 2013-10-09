@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyEllipsis">
+
+    <string name="app_name">WeemoSDK-Helper</string>
+    <string name="log_in">Log in</string>
+    <string name="call">Call</string>
+    <string name="check">Check</string>
+    <string name="connection_title">Connection</string>
+    <string name="connection_text">Selecting a Weemo platform</string>
+    <string name="authentication_title">Authentication</string>
+    <string name="ask_message">Please enter the name that other Weemo SDK Users will show for you</string>
+    <string name="ask_title">Display name</string>
+    <string name="unreachable">User ID unreachable</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="content_description_mute_sound">Mute or un-mute sound</string>
+    <string name="content_description_mute_mic">Mute or un-mute microphone</string>
+    <string name="content_description_video">Show or stop showing your video</string>
+    <string name="content_description_video_toggle">Toggle video input (front or back)</string>
+    <string name="content_description_hangup">Hangup</string>
+    <string name="is_calling_you">…is calling you!</string>
+    <string name="answer">Answer</string>
+    <string name="decline">Decline</string>
+    <string name="calling">Calling...</string>
+    <string name="incorrect_userid">UserID is incorrect</string>
+    <string name="crash_toast_text">Ooooops ! I crashed, but a report can been sent to my developer to help fix the issue !</string>
+    <string name="crash_dialog_text">
+        An unexpected error occurred forcing the
+	    application to stop. Please help us fix this by sending us error data,
+    	all you have to do is click OK.
+   	</string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
+
+</resources>
