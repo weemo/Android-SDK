@@ -1,0 +1,13 @@
+.metadata/
+bin/
+gen/
+*~
+proguard-dump.txt
+.DS_Store
+.settings
+proguard/
+obj/
+
+.project
+.cproject
+.classpath
