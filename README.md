@@ -10,7 +10,7 @@ Basic implemented functions into this example are:
 - Send or Receive a call by UID  
 - Stop or Start video
 - Mute or Unmute audio
-- iOS 6 Multi-tasking support
+- Support Android multi-tasking 
 
 For implementation details, please refer to the [project wiki](https://github.com/weemo/Android-SDK/wiki) and to the detailed [API Reference](http://docs.weemo.com/sdk/android/) documentation.
 
