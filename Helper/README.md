@@ -4,9 +4,15 @@ This project was made with Eclipse
 
 
 
-### Step 1 - Check Android plug-in
+### Step 1 - Check Android Developement Tools
 
-Make sure you have Android plug-in install with Eclipse
+Make sure you have Android plug-in install with Eclipse.
+
+Android Development Tools (ADT) is a plugin for the Eclipse IDE that is designed to give you a powerful, integrated environment in which to build Android applications.
+
+ADT extends the capabilities of Eclipse to let you quickly set up new Android projects, create an application UI, add packages based on the Android Framework API, debug your applications using the Android SDK tools, and even export signed (or unsigned) .apk files in order to distribute your application.
+
+If you need to install ADT, please check the [official ADT website](http://developer.android.com/sdk/installing/installing-adt.html)
 
 ### Step 2 - Install Findbugs Eclipse plug-in
 
