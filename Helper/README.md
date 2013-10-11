@@ -10,7 +10,11 @@ Make sure you have Android plug-in install with Eclipse
 
 ### Step 2 - Install Findbugs Eclipse plug-in
 
+FindBugs™ is a program to find bugs in Java programs. It looks for instances of "bug patterns" --- code instances that are likely to be errors.
 
+If you don't have Findbugs on your Eclipse, please download-it and intall-it. 
+
+Follow instruction on projcet website:  [http://findbugs.sourceforge.net/](http://findbugs.sourceforge.net/)
 
 ### Step 3 - Import the project in Eclipse 
 
