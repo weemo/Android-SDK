@@ -1,4 +1,4 @@
-package com.weemo.sdk.helper.connection;
+package com.weemo.sdk.helper;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -11,10 +11,7 @@ import com.weemo.sdk.Weemo;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.global.AuthenticatedEvent;
 import com.weemo.sdk.event.global.ConnectedEvent;
-import com.weemo.sdk.helper.ChooseFragment;
 import com.weemo.sdk.helper.ChooseFragment.ChooseListener;
-import com.weemo.sdk.helper.LoadingDialogFragment;
-import com.weemo.sdk.helper.R;
 import com.weemo.sdk.helper.contacts.ContactsActivity;
 
 public class ConnectActivity extends Activity implements ChooseListener {
@@ -55,7 +52,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		Weemo.getEventBus().register(this);
 
 		// Initialize Weemo, can be called multiple times
-		Weemo.initialize(getString(R.string.weemo_urlRef), this);
+		Weemo.initialize(getString(R.string.weemo_mobileAppId), this);
 	}
 
 	@Override

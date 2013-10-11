@@ -20,10 +20,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import com.weemo.sdk.Weemo;
 import com.weemo.sdk.WeemoCall;
 import com.weemo.sdk.WeemoCall.CallStatus;
+import com.weemo.sdk.WeemoCall.VideoProfile;
+import com.weemo.sdk.WeemoCall.VideoSource;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.event.call.ReceivingVideoChangedEvent;
@@ -39,6 +42,8 @@ public class CallActivity extends Activity {
 	private @Nullable ImageView video;
 	private @Nullable ImageView videoToggle;
 	private @Nullable ImageView hangup;
+
+	private @Nullable ToggleButton hdToggle;
 	
 	private int correction;
 	private boolean isSpeakerphoneOn;
@@ -147,10 +152,12 @@ public class CallActivity extends Activity {
 			@Override public void onClick(View v) {
 				video = !video;
 				if (video) {
+					videoOutFrame.setVisibility(View.VISIBLE);
 					call.videoStart();
 					videoToggle.setVisibility(View.VISIBLE);
 				}
 				else {
+					videoOutFrame.setVisibility(View.GONE);
 					call.videoStop();
 					videoToggle.setVisibility(View.GONE);
 				}
@@ -159,8 +166,10 @@ public class CallActivity extends Activity {
 
 		videoToggle = (ImageView) findViewById(R.id.video_toggle);
 		videoToggle.setOnClickListener(new OnClickListener() {
+			boolean front = true;
 			@Override public void onClick(View v) {
-				call.toggleVideoSource();
+				front = !front;
+				call.setVideoSource(front ? VideoSource.FRONT : VideoSource.BACK);
 			}
 		});
 
@@ -171,6 +180,14 @@ public class CallActivity extends Activity {
 			}
 		});
 
+		hdToggle = (ToggleButton) findViewById(R.id.hd_toggle);
+		hdToggle.setOnClickListener(new OnClickListener() {
+			@Override public void onClick(View v) {
+				boolean hd = hdToggle.isChecked();
+				call.setInVideoProfile(hd ? VideoProfile.HD : VideoProfile.SD);
+			}
+		});
+		
 		setSpeakerphoneOn(!audioManager.isWiredHeadsetOn());
 
 		switch (getWindowManager().getDefaultDisplay().getRotation()) {
@@ -198,6 +215,7 @@ public class CallActivity extends Activity {
 		animate(video,       "rotation", video.getRotation(),       orientation);
 		animate(videoToggle, "rotation", videoToggle.getRotation(), orientation);
 		animate(hangup,      "rotation", hangup.getRotation(),      orientation);
+		animate(hdToggle,    "rotation", hdToggle.getRotation(),    orientation);
 	}
 	
 	@Override

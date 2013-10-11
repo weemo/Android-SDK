@@ -157,9 +157,8 @@ public class ContactsActivity extends Activity implements ChooseListener {
 				((ChooseFragment) getFragmentManager().findFragmentById(android.R.id.content)).setEnabled(false);
 				break;
 			case SYSTEM_ERROR:
-				Toast.makeText(this, error.description(), Toast.LENGTH_LONG).show();
-				// intentional fallthrough
 			case DESTROYED:
+				Toast.makeText(this, error.description(), Toast.LENGTH_LONG).show();
 				stopService(new Intent(ContactsActivity.this, ConnectedService.class));
 				finish();
 				break;

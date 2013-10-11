@@ -7,7 +7,3 @@ proguard-dump.txt
 .settings
 proguard/
 obj/
-
-.project
-.cproject
-.classpath
