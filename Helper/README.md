@@ -29,7 +29,7 @@ Follow instruction on projcet website:  [http://findbugs.sourceforge.net/](http:
 Import the Helper project in Eclipse as an "Existing Android Project"
 
 <p align="center">
-<img src="http://docs.weemo.com/img/eclipse_import.gif">
+<img src="http://docs.weemo.com/img/android_import.png">
 
 </p>
 
