@@ -2,7 +2,7 @@
 
 This project was made with Eclipse, to be sure of the compatibility of the SDK Helper we highly recommand to use this IDE.   
 
-
+Follow these 5 Step to test Weemo Technologies into a sample application.
 
 ### Step 1 - Check Android Developement Tools
 
