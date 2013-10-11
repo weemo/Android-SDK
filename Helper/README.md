@@ -6,7 +6,7 @@ Follow these 5 Step to test Weemo Technologies into a sample application.
 
 ### Step 1 - Check Android Developement Tools
 
-Make sure you have Android plug-in install with Eclipse.
+Make sure you have Android plug-in installed within Eclipse.
 
 Android Development Tools (ADT) is a plugin for the Eclipse IDE that is designed to give you a powerful, integrated environment in which to build Android applications.
 
@@ -19,17 +19,19 @@ If you need to install ADT, please check the [official ADT website](http://devel
 
 FindBugs™ is a program to find bugs in Java programs. It looks for instances of "bug patterns" --- code instances that are likely to be errors.
 
+While the SDK uses FindBugs, you don't have to install FindBugs to use th SDK. However, you have to install FondBugs to compile and use the Helper.
+
 If you don't have Findbugs on your Eclipse, please download-it and intall-it. 
 
-Follow instruction on projcet website:  [http://findbugs.sourceforge.net/](http://findbugs.sourceforge.net/)
+Follow instruction on projcet website:  [http://findbugs.sourceforge.net/](http://findbugs.cs.umd.edu/eclipse/)
 
 
 ### Step 3 - Import the project in Eclipse 
 
-Import the Helper project in Eclipse as an "Existing Android Project"
+Import the Helper project in Eclipse as an "Existing Project"
 
 <p align="center">
-<img src="http://docs.weemo.com/img/android_import.png">
+<img src="http://community.nuxeo.com/static/dev-tutorial/pictures/lesson4-import-existing.PNG">
 
 </p>
 
@@ -51,7 +53,7 @@ Replace your "ENTER YOUR KEY HERE" by your mobileAppId provided by Weemo:
 
 ### Step 5 - Run the project 
 
-This project cannnot run in an Emulator, please run-it on your Android mobile Device.
+This project cannnot run in an Emulator, please run-it on your Android mobile ARM Device.
 
 <p align="center">
 <img src="http://docs.weemo.com/img/android_run.png">
