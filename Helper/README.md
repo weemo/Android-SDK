@@ -1,6 +1,6 @@
 ### Overview
 
-This project was made with Eclipse 
+This project was made with Eclipse, to be sure of the compatibility of the SDK Helper we highly recommand to use this IDE.   
 
 
 
@@ -14,6 +14,7 @@ ADT extends the capabilities of Eclipse to let you quickly set up new Android pr
 
 If you need to install ADT, please check the [official ADT website](http://developer.android.com/sdk/installing/installing-adt.html)
 
+
 ### Step 2 - Install Findbugs Eclipse plug-in
 
 FindBugs™ is a program to find bugs in Java programs. It looks for instances of "bug patterns" --- code instances that are likely to be errors.
@@ -22,10 +23,15 @@ If you don't have Findbugs on your Eclipse, please download-it and intall-it.
 
 Follow instruction on projcet website:  [http://findbugs.sourceforge.net/](http://findbugs.sourceforge.net/)
 
+
 ### Step 3 - Import the project in Eclipse 
 
 Import the Helper project in Eclipse as an "Existing Android Project"
 
+<p align="center">
+<img src="http://docs.weemo.com/img/eclipse_import.png">
+
+</p>
 
 ### Step 4 -  Configure your mobileAppId 
 
