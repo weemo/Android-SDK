@@ -49,4 +49,10 @@ Replace your "ENTER YOUR KEY HERE" by your mobileAppId provided by Weemo:
 </resources>
 ```
 
-### Step 5 - Run the project (cannot run in an emulator)
+### Step 5 - Run the project 
+
+This project cannnot run in an Emulator, please run-it on your Android mobile Device.
+
+<p align="center">
+<img src="http://docs.weemo.com/img/android_run.png">
+</p>
