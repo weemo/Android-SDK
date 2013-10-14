@@ -31,7 +31,7 @@ Follow instruction on projcet website:  [http://findbugs.sourceforge.net/](http:
 Import the Helper project in Eclipse as an "Existing Project"
 
 <p align="center">
-<img src="http://community.nuxeo.com/static/dev-tutorial/pictures/lesson4-import-existing.PNG">
+<img src="http://docs.weemo.com./img/android_build.png">
 
 </p>
 
