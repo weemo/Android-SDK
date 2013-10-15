@@ -9,8 +9,8 @@ import android.support.v4.app.NotificationCompat;
 
 import com.weemo.sdk.Weemo;
 import com.weemo.sdk.event.WeemoEventListener;
+import com.weemo.sdk.event.call.CallCreatedEvent;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
-import com.weemo.sdk.event.global.CallCreatedEvent;
 import com.weemo.sdk.helper.call.IncomingActivity;
 import com.weemo.sdk.helper.contacts.ContactsActivity;
 
@@ -43,7 +43,7 @@ public class ConnectedService extends Service {
 		assert weemo != null;
 		String displayName = weemo.getDisplayName();
 		if (displayName != null)
-			displayName = weemo.getToken();
+			displayName = weemo.getUserId();
 		assert displayName != null;
 		presenceNotification(
 				R.drawable.ic_launcher,

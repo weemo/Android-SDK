@@ -16,7 +16,6 @@ import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.helper.R;
 import com.weemo.sdk.helper.call.CallActivity;
-import com.weemo.sdk.helper.call.IncomingActivity;
 
 public class ContactCallingDialogFragment extends DialogFragment {
 	

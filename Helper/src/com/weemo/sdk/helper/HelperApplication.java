@@ -8,7 +8,6 @@ import org.acra.sender.HttpSender;
 
 import android.app.Application;
 
-import com.github.anrwatchdog.ANRWatchDog;
 import com.github.nativehandler.NativeCrashHandler;
 import com.weemo.sdk.Weemo;
 
@@ -51,7 +50,7 @@ import com.weemo.sdk.Weemo;
 		)
 public class HelperApplication extends Application {
 
-	private ANRWatchDog watchDog = new ANRWatchDog(10000);
+//	private ANRWatchDog watchDog = new ANRWatchDog(10000);
 
 	static {
 		Weemo.ensureNativeLoad();

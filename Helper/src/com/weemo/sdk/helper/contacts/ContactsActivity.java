@@ -33,7 +33,7 @@ public class ContactsActivity extends Activity implements ChooseListener {
 			Weemo weemo = Weemo.instance();
 			assert weemo != null;
 			
-			String uid = weemo.getToken();
+			String uid = weemo.getUserId();
 			assert uid != null;
 
 			String displayName = weemo.getDisplayName();
@@ -81,7 +81,7 @@ public class ContactsActivity extends Activity implements ChooseListener {
 		if (!displayName.isEmpty())
 			setTitle(displayName);
 		else {
-			String uid = weemo.getToken();
+			String uid = weemo.getUserId();
 			assert uid != null;
 			setTitle("{" + uid + "}");
 		}

@@ -92,8 +92,6 @@ public class CallActivity extends Activity {
 		videoInFrame.setDisplayFollowDeviceOrientation(true);
 		call.setVideoIn(videoInFrame);
 
-		call.videoStart();
-		
 		setTitle(call.getContactDisplayName());
 		
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
