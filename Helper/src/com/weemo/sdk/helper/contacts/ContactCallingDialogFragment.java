@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.weemo.sdk.Weemo;
 import com.weemo.sdk.WeemoCall;
@@ -17,6 +16,10 @@ import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.helper.R;
 import com.weemo.sdk.helper.call.CallActivity;
 
+/*
+ * This fragments displays a loading dialog while calling a remote contact.
+ * When the call is established, it starts the CallActivity.
+ */
 public class ContactCallingDialogFragment extends DialogFragment {
 	
 	public static ContactCallingDialogFragment newInstance(int callId) {
@@ -60,15 +63,27 @@ public class ContactCallingDialogFragment extends DialogFragment {
 		super.onStop();
 	}
 	
+	/*
+	 * This listener catches CallStatusChangedEvent
+	 * 1. It is annotated with @WeemoEventListener
+	 * 2. It takes one argument which type is CallStatusChangedEvent
+	 * 3. It's fragment object has been registered with Weemo.getEventBus().register(this) in onStart()
+	 */
 	@WeemoEventListener
 	public void onCallStatusChanged(CallStatusChangedEvent e) {
+		// We check that the call affected is the one we are monitoring
 		if (e.getCall().getCallId() != getArguments().getInt("callId"))
 			return ;
 		
+		// If the call is now ENDED, it means that the remote user has either:
+		// - disconnected
+		// - refused the call
 		if (e.getCallStatus() == CallStatus.ENDED)
 			dismiss();
+
+		// If the call is now ACTIVE, it is now taking place
+		// we therefore start the CallActivity
 		else if (e.getCallStatus() == CallStatus.ACTIVE) {
-			Log.i("NPEAVOID", "Starting CallActivity from CallingDialog");
 			startActivity(
 				new Intent(getActivity(), CallActivity.class)
 					.putExtra("callId", e.getCall().getCallId())

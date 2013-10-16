@@ -12,6 +12,10 @@ import android.widget.EditText;
 
 import com.weemo.sdk.helper.R;
 
+/*
+ * This is a simple fragment that asks the user to chose a display name.
+ * This is a simple util and does not contain Weemo SDK specific code
+ */
 public class AskDisplayNameDialogFragment extends DialogFragment {
 	
 	@Nullable EditText input = null;

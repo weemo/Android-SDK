@@ -5,6 +5,11 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+/*
+ * This is a very simple fragment that creates a loading Dialogfragment.
+ * It is used  multiple times in this project
+ * This is a simple util and does not contain Weemo SDK specific code
+ */
 public class LoadingDialogFragment extends DialogFragment {
 
 	public static LoadingDialogFragment newFragmentInstance(String title, String text) {

@@ -23,6 +23,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/*
+ * This is a simple fragment that allows the user of the application to chose from a list
+ * or to directly enter a value.
+ * It is used  multiple times in this project
+ * This is a simple util and does not contain Weemo SDK specific code
+ */
 public class ChooseFragment extends Fragment {
 
 	public static ChooseFragment newInstance(String buttonText, @CheckForNull String removeID) {

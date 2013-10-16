@@ -8,9 +8,15 @@ import org.acra.sender.HttpSender;
 
 import android.app.Application;
 
+import com.github.anrwatchdog.ANRWatchDog;
 import com.github.nativehandler.NativeCrashHandler;
 import com.weemo.sdk.Weemo;
 
+/*
+ * This is the ACRA configuration anotation.
+ * Acra enables great crash reporting.
+ * More intel at https://github.com/ACRA/acra
+ */
 @ReportsCrashes(
 		formKey = "",
 		mailTo = "coredumps@weemo.com",
@@ -21,7 +27,6 @@ import com.weemo.sdk.Weemo;
 		resDialogTitle = R.string.app_name,
 		resDialogText = R.string.crash_dialog_text,
 		logcatArguments = { "-t", "1000", "-v", "time" },
-//		resDialogCommentPrompt = R.string.crash_dialog_comment_prompt,
 		resDialogOkToast = R.string.crash_dialog_ok_toast,
 		customReportContent = {
 				ReportField.REPORT_ID,
@@ -50,8 +55,17 @@ import com.weemo.sdk.Weemo;
 		)
 public class HelperApplication extends Application {
 
-//	private ANRWatchDog watchDog = new ANRWatchDog(10000);
+	/*
+	 * This is a Watchdog that will detect ANRs
+	 * More intel in https://github.com/SalomonBrys/ANR-WatchDog
+	 */
+	private ANRWatchDog watchDog = new ANRWatchDog(20000);
 
+	/*
+	 * Because we are using NativeCrashHandler in onCreate (which uses native code),
+	 * we need to make sure that the Weemo native library has correctly loaded.
+	 * This is not necessary in a client application and only usefull in the context of Weemo.
+	 */
 	static {
 		Weemo.ensureNativeLoad();
 	}
@@ -60,15 +74,17 @@ public class HelperApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
+		// Please not that the three steps below are only useful for error reporting purposes.
+		// It is not needed in a client application.
+		
+		// ACRA startup
 		ACRA.init(this);
-		
 		ACRA.getErrorReporter().setReportSender(new AttachmentEmailSender(this));
-		
-		// This disables ACRA during development
-		//ACRA.getACRASharedPreferences().edit().putBoolean("acra.disable", true).apply();
 
-		//watchDog.start();
-		
+		// Starts the ANR WatchDog
+		watchDog.start();
+
+		// Registers the Native Crash Handler to be activated in case of native crash.
 		new NativeCrashHandler().registerForNativeCrash(this);
 	}
 }

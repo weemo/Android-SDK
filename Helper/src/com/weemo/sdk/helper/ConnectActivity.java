@@ -14,6 +14,10 @@ import com.weemo.sdk.event.global.ConnectedEvent;
 import com.weemo.sdk.helper.ChooseFragment.ChooseListener;
 import com.weemo.sdk.helper.contacts.ContactsActivity;
 
+/*
+ * This is the first activity being launched.
+ * Its role is to handle connection and authentication of the user.
+ */
 public class ConnectActivity extends Activity implements ChooseListener {
 
 	private boolean hasLoggedIn = false;
@@ -22,18 +26,23 @@ public class ConnectActivity extends Activity implements ChooseListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Checks if Weemo is already initialized and authenticated.
+		// If it is, it is probably because the user clicked on the service notification.
+		// In which case, the user is redirected to the second screen
 		Weemo weemo = Weemo.instance();
 		if (weemo != null && weemo.isAuthenticated()) {
-			// TODO: Unset this and investigate deadlock
 			hasLoggedIn = true;
 			startActivity(
 				new Intent(this, ContactsActivity.class)
 					.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 				);
 			finish();
+			return ;
 		}
 		
-		// This activity starts with a LoadingFragment
+		// This activity starts with a LoadingFragment (which makes the user wait while Weemo is connecting)
+		// The connection is started in onStart, after registering the listener
+		// (so that the ConnectedEvent can't be launched while we are not yet listening).
 		if (savedInstanceState == null) {
 			LoadingDialogFragment dialog = LoadingDialogFragment.newFragmentInstance(getString(R.string.connection_title), getString(R.string.connection_text));
 			dialog.setCancelable(false);
@@ -48,7 +57,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		// This should always be the first statement of onStart
 		Weemo.onActivityStart();
 
-		// Register as event listener
+		// Register the activity as event listener
 		Weemo.getEventBus().register(this);
 
 		// Initialize Weemo, can be called multiple times
@@ -68,51 +77,65 @@ public class ConnectActivity extends Activity implements ChooseListener {
 
 	@Override
 	protected void onDestroy() {
-		// Stops Weemo if this activity is destroyed with hasLoggedIn is true,
+		// If this activity is destroyed with hasLoggedIn is true,
 		// this means it is destroyed after CallActivity being displayed.
 		// However, if hasLoggedIn is false, it means that the activity is destroyed
 		// because the user has got out of the application without logging in.
-		// In this case we need to stop the Weemo engine
+		// In this case we need to stop the Weemo engine.
 		if (!hasLoggedIn)
 			Weemo.destroy();
 		
 		super.onDestroy();
 	}
 	
-	// This is called by the ChoseFragment when user clicks on "login" button
+	/*
+	 * This is called by the ChoseFragment when user clicks on "login" button
+	 */
 	@Override
-	public void onChoose(String chose) {
+	public void onChoose(String userId) {
 		Weemo weemo = Weemo.instance();
 		// Weemo must be instanciated at this point
-		assert weemo != null;
+		if (weemo == null) {
+			finish();
+			return ;
+		}
 
-		// Start authentication
-		boolean ok = weemo.authenticate(chose, Weemo.UserType.INTERNAL);
-		if (ok) {
-			LoadingDialogFragment dialog = LoadingDialogFragment.newFragmentInstance(chose, getString(R.string.authentication_title));
+		// Start authentication with the userId chosen by the user.
+		boolean correctUserId = weemo.authenticate(userId, Weemo.UserType.INTERNAL);
+		
+		// If Weemo says authentication will be tried, display a loading DialogFragment
+		if (correctUserId) {
+			LoadingDialogFragment dialog = LoadingDialogFragment.newFragmentInstance(userId, getString(R.string.authentication_title));
 			dialog.setCancelable(false);
 			dialog.show(getFragmentManager(), "dialog");
 		}
 		else
+			// Weemo replied that authentication would not be tried
+			// because chosen userId is not compliant with Weemo requirements
 			Toast.makeText(this, R.string.incorrect_userid, Toast.LENGTH_SHORT).show();
 	}
 
-	// This listener will be called when a ConnectedEvent occurs because:
-	// 1. It is annotated with @WeemoEventListener
-	// 2. It takes one argument which type is ConnectedEvent
-	// 3. It's object has been registered with Weemo.getEventBus().register(this) in onResume()
+	/*
+	 * This listener catches ConnectedEvent
+	 * 1. It is annotated with @WeemoEventListener
+	 * 2. It takes one argument which type is ConnectedEvent
+	 * 3. It's activity object has been registered with Weemo.getEventBus().register(this) in onStart()
+	 * */
 	@WeemoEventListener
 	public void onConnected(ConnectedEvent e) {
 		ConnectedEvent.Error error = e.getError();
 		
+		// If there is an error, this means that connection failed
+		// So we display the English description of the error
+		// We then finish the application as nothing can be done (in this app) without being connected
 		if (error != null) {
-			// There was an error, so we display its English description
 			Toast.makeText(this, error.description(), Toast.LENGTH_LONG).show();
 			finish();
 			return ;
 		}
 		
-		// If there is no error, everything went normal, show login fragment
+		// If there is no error, everything went normal, connection succeeded.
+		// In this case, we stop the loading dialog and show login fragment
 		Log.i("=====", "LAUNCHING LOGIN");
 		DialogFragment dialog = (DialogFragment) getFragmentManager().findFragmentByTag("dialog");
 		if (dialog != null)
@@ -120,16 +143,20 @@ public class ConnectActivity extends Activity implements ChooseListener {
         getFragmentManager().beginTransaction().replace(android.R.id.content, ChooseFragment.newInstance(getString(R.string.log_in))).commit();
 	}
 
-	// This listener will be called when an AuthenticatedEvent occurs because:
-	// 1. It is annotated with @WeemoEventListener
-	// 2. It takes one argument which type is AuthenticatedEvent
-	// 3. It's object has been registered with Weemo.getEventBus().register(this) in onResume()
+	/*
+	 * This listener catches AuthenticatedEvent
+	 * 1. It is annotated with @WeemoEventListener
+	 * 2. It takes one argument which type is AuthenticatedEvent
+	 * 3. It's activity object has been registered with Weemo.getEventBus().register(this) in onStart()
+	 */
 	@WeemoEventListener
 	public void onAuthenticated(AuthenticatedEvent e) {
 		AuthenticatedEvent.Error error = e.getError();
 		
+		// If there is an error, this means that authentication failed
+		// So we display the English description of the error
+		// We then go back to the login fragment so that authentication can be tried again
 		if (error != null) {
-			// There was an error, so we display its English description as a toast and go back to login fragment
 			Toast.makeText(this, error.description(), Toast.LENGTH_LONG).show();
 			DialogFragment dialog = (DialogFragment) getFragmentManager().findFragmentByTag("dialog");
 			if (dialog != null)
@@ -138,9 +165,6 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		}
 		
 		// If there is no error, everything went normal, go to call activity
-		Log.i("=====", "LAUNCHING CALL");
-
-		// If error is null, then auth went ok, then there is a UserID
 		hasLoggedIn = true;
 		startActivity(new Intent(this, ContactsActivity.class));
 		finish();

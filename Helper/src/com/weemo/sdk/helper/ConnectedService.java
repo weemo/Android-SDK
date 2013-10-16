@@ -16,14 +16,33 @@ import com.weemo.sdk.helper.contacts.ContactsActivity;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+/*
+ * This is a service that will manage the notification saying that you are connected or that you are having a call.
+ * It is also this service that will show the "you are called" popup when the user receives an incoming call.
+ * 
+ * This service is supposed to be started upon connection and stopped upon disconnection.
+ * 
+ * By default, it sets a service background notification that just says that the user is connected.
+ * 
+ * It the listens for:
+ *  - CallCreatedEvent to change the notification to it's call state
+ *  - CallStatusChangedEvent with status ENDED to put the notification back to it's normal state
+ *  - CallStatusChangedEvent with status RINGING to show the "you are called" popup
+ */
 @SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"})
 public class ConnectedService extends Service {
 
+	/*
+	 * This is not a binded service
+	 */
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
 
+	/*
+	 * Set the background notification
+	 */
 	private void presenceNotification(int icon, String title, String message) {
 		Intent intent = new Intent(this, ContactsActivity.class).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -38,6 +57,10 @@ public class ConnectedService extends Service {
 		startForeground(42, n);
 	}
 	
+	/*
+	 * Set the normal presence notification
+	 * (Get the required parameters and call presenceNotification()
+	 */
 	private void normalPresenceNotification() {
 		Weemo weemo = Weemo.instance();
 		assert weemo != null;
@@ -52,6 +75,9 @@ public class ConnectedService extends Service {
 			);
 	}
 
+	/*
+	 * Start notification on service start
+	 */
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -60,6 +86,9 @@ public class ConnectedService extends Service {
 		return super.onStartCommand(intent, flags, startId);
 	}
 
+	/*
+	 * Registers itself as a listener when created
+	 */
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -67,18 +96,33 @@ public class ConnectedService extends Service {
 		Weemo.getEventBus().register(this);
 	}
 	
+	/*
+	 * Unregisters itself as a listener when destroyed
+	 */
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
-		
 		Weemo.getEventBus().unregister(this);
+
+		super.onDestroy();
 	}
 
+	/*
+	 * This listener method catches CallCreatedEvent
+	 * 1. It is annotated with @WeemoEventListener
+	 * 2. It takes one argument which type is CallCreatedEvent
+	 * 3. It's service object has been registered with Weemo.getEventBus().register(this) in onCreate()
+	 */
 	@WeemoEventListener
 	public void onCallCreated(CallCreatedEvent e) {
 		presenceNotification(android.R.drawable.ic_menu_call, e.getCall().getContactDisplayName(), "");
 	}
 	
+	/*
+	 * This listener method catches CallStatusChangedEvent
+	 * 1. It is annotated with @WeemoEventListener
+	 * 2. It takes one argument which type is CallStatusChangedEvent
+	 * 3. It's service object has been registered with Weemo.getEventBus().register(this) in onCreate()
+	 */
 	@WeemoEventListener
 	public void onCallStatusChanged(CallStatusChangedEvent e) {
 		switch(e.getCallStatus()) {

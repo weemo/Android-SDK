@@ -17,6 +17,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 
+/*
+ * This is used by ACRA to generate a (crash) report
+ */
 public class AttachmentEmailSender implements ReportSender {
 
 	private final Application ctx;
@@ -35,9 +38,9 @@ public class AttachmentEmailSender implements ReportSender {
 			PackageInfo pkgInfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
 			versionName = pkgInfo.versionName;
 			versionCode = pkgInfo.versionCode;
-		} catch (NameNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
 		}
 
 		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
