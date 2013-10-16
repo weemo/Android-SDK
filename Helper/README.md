@@ -19,7 +19,7 @@ If you need to install ADT, please check the [official ADT website](http://devel
 
 FindBugs™ is a program to find bugs in Java programs. It looks for instances of "bug patterns" --- code instances that are likely to be errors.
 
-While the SDK uses FindBugs, you don't have to install FindBugs to use th SDK. However, you have to install FondBugs to compile and use the Helper.
+While the SDK uses FindBugs, you don't have to install FindBugs to use th SDK. However, you have to install FindBugs to compile and use the Helper.
 
 If you don't have Findbugs on your Eclipse, please download-it and intall-it. 
 
