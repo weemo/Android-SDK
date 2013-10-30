@@ -12,14 +12,15 @@ import android.widget.Toast;
 import com.weemo.sdk.Weemo;
 import com.weemo.sdk.WeemoCall;
 import com.weemo.sdk.WeemoCall.CallStatus;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.event.global.CanCreateCallChangedEvent;
 import com.weemo.sdk.helper.ChooseFragment;
 import com.weemo.sdk.helper.ChooseFragment.ChooseListener;
-import com.weemo.sdk.helper.call.CallActivity;
 import com.weemo.sdk.helper.ConnectedService;
 import com.weemo.sdk.helper.R;
+import com.weemo.sdk.helper.call.CallActivity;
 
 /*
  * This is the main activity when the user is connected.
@@ -44,7 +45,7 @@ public class ContactsActivity extends Activity implements ChooseListener {
 		
 		if(savedInstanceState == null) {
 			// Ensure that Weemo is initialized
-			Weemo weemo = Weemo.instance();
+			WeemoEngine weemo = Weemo.instance();
 			if (weemo == null) {
 				Log.e(LOGTAG, "ContactsActivity was started while Weemo is not initialized");
 				finish();
@@ -99,7 +100,7 @@ public class ContactsActivity extends Activity implements ChooseListener {
 	 * If there is no display name, then we use the user ID
 	 */
 	private void setTitleFromDisplayName() {
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		assert weemo != null;
 		String displayName = weemo.getDisplayName();
 		if (!displayName.isEmpty())
@@ -115,7 +116,7 @@ public class ContactsActivity extends Activity implements ChooseListener {
 	 * Set the display name
 	 */
 	public void setDisplayName(String displayName) {
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		assert weemo != null;
 		weemo.setDisplayName(displayName);
 
@@ -132,10 +133,10 @@ public class ContactsActivity extends Activity implements ChooseListener {
 		Weemo.onActivityStart();
 
 		// Register as event listener
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
 		
 		// Enables or disable the call button according to weemo.canCreateCall()
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		assert weemo != null;
 		((ChooseFragment) getFragmentManager().findFragmentById(android.R.id.content)).setEnabled(weemo.canCreateCall());
 
@@ -154,7 +155,7 @@ public class ContactsActivity extends Activity implements ChooseListener {
 	@Override
 	protected void onStop() {
 		// Unregister as event listener
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		// This should always be the last statement of onStop
 		Weemo.onActivityStop();

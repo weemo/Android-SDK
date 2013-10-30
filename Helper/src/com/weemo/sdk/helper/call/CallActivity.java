@@ -26,6 +26,7 @@ import com.weemo.sdk.WeemoCall;
 import com.weemo.sdk.WeemoCall.CallStatus;
 import com.weemo.sdk.WeemoCall.VideoProfile;
 import com.weemo.sdk.WeemoCall.VideoSource;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.event.call.ReceivingVideoChangedEvent;
@@ -103,7 +104,7 @@ public class CallActivity extends Activity {
 
 		// Weemo must be initialized before starting this activity
 		// If it is not, we finish the activity
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		if (weemo == null) {
 			finish();
 			return ;
@@ -304,7 +305,7 @@ public class CallActivity extends Activity {
 		Weemo.onActivityStart();
 
 		// Register as event listener
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
 
 		// Start listening for orientation changes
 		if (oel.canDetectOrientation())
@@ -319,7 +320,7 @@ public class CallActivity extends Activity {
 	@Override
 	protected void onStop() {
 		// Unregister as event listener
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		// We do not need to listen for orientation change while we are in the background
 		// Beside, not stoping this will generate a leak when the activity is destroyed

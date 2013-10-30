@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.weemo.sdk.Weemo;
 import com.weemo.sdk.WeemoCall;
 import com.weemo.sdk.WeemoCall.CallStatus;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.helper.R;
@@ -37,7 +38,7 @@ public class ContactCallingDialogFragment extends DialogFragment {
 		dialog.setMessage(getString(R.string.calling));
 		dialog.setButton(Dialog.BUTTON_NEGATIVE, getString(android.R.string.cancel), new OnClickListener() {
 			@Override public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-				Weemo weemo = Weemo.instance();
+				WeemoEngine weemo = Weemo.instance();
 				assert weemo != null;
 				WeemoCall call = weemo.getCall(getArguments().getInt("callId"));
 				if (call != null)
@@ -52,13 +53,13 @@ public class ContactCallingDialogFragment extends DialogFragment {
 		super.onStart();
 
 		// Register as event listener
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
 	}
 
 	@Override
 	public void onStop() {
 		// Unregister as event listener
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		super.onStop();
 	}

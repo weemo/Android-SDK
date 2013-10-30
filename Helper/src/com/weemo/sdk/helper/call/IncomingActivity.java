@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import com.weemo.sdk.Weemo;
 import com.weemo.sdk.WeemoCall;
 import com.weemo.sdk.WeemoCall.CallStatus;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
 import com.weemo.sdk.helper.R;
@@ -34,7 +35,7 @@ public class IncomingActivity extends Activity {
 		findViewById(R.id.answer).setOnClickListener(new OnClickListener() {
 			@Override public void onClick(View arg0) {
 				// get the call by its id (provided to the activity in the intent by the service)
-				Weemo weemo = Weemo.instance();
+				WeemoEngine weemo = Weemo.instance();
 				assert weemo != null;
 				WeemoCall call = weemo.getCall(getIntent().getIntExtra("callId", 0));
 				if (call != null) {
@@ -53,7 +54,7 @@ public class IncomingActivity extends Activity {
 		findViewById(R.id.decline).setOnClickListener(new OnClickListener() {
 			@Override public void onClick(View arg0) {
 				// get the call by its id (provided to the activity in the intent by the service)
-				Weemo weemo = Weemo.instance();
+				WeemoEngine weemo = Weemo.instance();
 				assert weemo != null;
 				WeemoCall call = weemo.getCall(getIntent().getIntExtra("callId", 0));
 				if (call != null)
@@ -72,13 +73,13 @@ public class IncomingActivity extends Activity {
 		Weemo.onActivityStart();
 
 		// Register as event listener
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
 	}
 
 	@Override
 	protected void onStop() {
 		// Unregister as event listener
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		// This should always be the last statement of onStop
 		Weemo.onActivityStop();

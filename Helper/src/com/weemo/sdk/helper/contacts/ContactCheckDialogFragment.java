@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.weemo.sdk.Weemo;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.global.StatusEvent;
 import com.weemo.sdk.helper.R;
@@ -38,11 +39,11 @@ public class ContactCheckDialogFragment extends DialogFragment {
 		super.onStart();
 
 		// Register as event listener
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
 		
 		// Asks weemo engine to do the check
 		// The answer of this check will be provided through a StatusEvent
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		assert weemo != null;
 		weemo.getStatus(getArguments().getString("contactId"));
 	}
@@ -50,7 +51,7 @@ public class ContactCheckDialogFragment extends DialogFragment {
 	@Override
 	public void onStop() {
 		// Unregister as event listener
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		super.onStop();
 	}

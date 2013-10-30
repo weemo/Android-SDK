@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.weemo.sdk.Weemo;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.global.AuthenticatedEvent;
 import com.weemo.sdk.event.global.ConnectedEvent;
@@ -29,7 +30,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		// Checks if Weemo is already initialized and authenticated.
 		// If it is, it is probably because the user clicked on the service notification.
 		// In which case, the user is redirected to the second screen
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		if (weemo != null && weemo.isAuthenticated()) {
 			hasLoggedIn = true;
 			startActivity(
@@ -58,7 +59,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		Weemo.onActivityStart();
 
 		// Register the activity as event listener
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
 
 		// Initialize Weemo, can be called multiple times
 		Weemo.initialize(getString(R.string.weemo_mobileAppId), this);
@@ -67,7 +68,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 	@Override
 	protected void onStop() {
 		// Unregister as event listener
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		// This should always be the last statement of onStop
 		Weemo.onActivityStop();
@@ -93,7 +94,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 	 */
 	@Override
 	public void onChoose(String userId) {
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		// Weemo must be instanciated at this point
 		if (weemo == null) {
 			finish();
@@ -101,7 +102,7 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		}
 
 		// Start authentication with the userId chosen by the user.
-		boolean correctUserId = weemo.authenticate(userId, Weemo.UserType.INTERNAL);
+		boolean correctUserId = weemo.authenticate(userId, WeemoEngine.UserType.INTERNAL);
 		
 		// If Weemo says authentication will be tried, display a loading DialogFragment
 		if (correctUserId) {

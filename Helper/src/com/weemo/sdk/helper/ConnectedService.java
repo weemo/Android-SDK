@@ -1,13 +1,21 @@
 package com.weemo.sdk.helper;
 
+import java.io.IOException;
+
+import javax.annotation.CheckForNull;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import com.weemo.sdk.Weemo;
+import com.weemo.sdk.WeemoEngine;
 import com.weemo.sdk.event.WeemoEventListener;
 import com.weemo.sdk.event.call.CallCreatedEvent;
 import com.weemo.sdk.event.call.CallStatusChangedEvent;
@@ -32,6 +40,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"})
 public class ConnectedService extends Service {
 
+	/*
+	 * Player used to play ringing sound
+	 */
+	@CheckForNull MediaPlayer player;
+	
 	/*
 	 * This is not a binded service
 	 */
@@ -62,7 +75,7 @@ public class ConnectedService extends Service {
 	 * (Get the required parameters and call presenceNotification()
 	 */
 	private void normalPresenceNotification() {
-		Weemo weemo = Weemo.instance();
+		WeemoEngine weemo = Weemo.instance();
 		assert weemo != null;
 		String displayName = weemo.getDisplayName();
 		if (displayName != null)
@@ -93,7 +106,20 @@ public class ConnectedService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		
-		Weemo.getEventBus().register(this);
+		Weemo.eventBus().register(this);
+		
+		try {
+			AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.ring);
+			player = new MediaPlayer();
+			player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+			player.setAudioStreamType(AudioManager.STREAM_RING);
+			player.prepare();
+			player.setLooping(true);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			player = null;
+		}
 	}
 	
 	/*
@@ -101,7 +127,7 @@ public class ConnectedService extends Service {
 	 */
 	@Override
 	public void onDestroy() {
-		Weemo.getEventBus().unregister(this);
+		Weemo.eventBus().unregister(this);
 
 		super.onDestroy();
 	}
@@ -125,11 +151,19 @@ public class ConnectedService extends Service {
 	 */
 	@WeemoEventListener
 	public void onCallStatusChanged(CallStatusChangedEvent e) {
+		// If the ringing sound is playing, it means that we have gone from RINGING to whatever-but-RINGING
+		// In which case we stop the ringing
+		if (player != null && player.isPlaying())
+			player.stop();
 		switch(e.getCallStatus()) {
 		case ENDED:
 			normalPresenceNotification();
 			break ;
 		case RINGING:
+			// Starts the ringing
+			if (player != null)
+				player.start();
+			// Starts pickup dialog activity
 			startActivity(
 				new Intent(this, IncomingActivity.class)
 					.putExtra("displayName", e.getCall().getContactDisplayName())
