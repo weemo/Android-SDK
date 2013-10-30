@@ -102,18 +102,11 @@ public class ConnectActivity extends Activity implements ChooseListener {
 		}
 
 		// Start authentication with the userId chosen by the user.
-		boolean correctUserId = weemo.authenticate(userId, WeemoEngine.UserType.INTERNAL);
+		weemo.authenticate(userId, WeemoEngine.UserType.INTERNAL);
 		
-		// If Weemo says authentication will be tried, display a loading DialogFragment
-		if (correctUserId) {
-			LoadingDialogFragment dialog = LoadingDialogFragment.newFragmentInstance(userId, getString(R.string.authentication_title));
-			dialog.setCancelable(false);
-			dialog.show(getFragmentManager(), "dialog");
-		}
-		else
-			// Weemo replied that authentication would not be tried
-			// because chosen userId is not compliant with Weemo requirements
-			Toast.makeText(this, R.string.incorrect_userid, Toast.LENGTH_SHORT).show();
+		LoadingDialogFragment dialog = LoadingDialogFragment.newFragmentInstance(userId, getString(R.string.authentication_title));
+		dialog.setCancelable(false);
+		dialog.show(getFragmentManager(), "dialog");
 	}
 
 	/*

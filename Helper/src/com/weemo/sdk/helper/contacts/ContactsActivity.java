@@ -197,8 +197,8 @@ public class ContactsActivity extends Activity implements ChooseListener {
 				
 			// This is either a system error or the Weemo engine was destroyed (by the user when he clicks disconnect)
 			// We print the error message and finish the activity, the service (and the application along)
-			case SYSTEM_ERROR:
-			case DESTROYED:
+			case SIP_NOK:
+			case CLOSED:
 				Toast.makeText(this, error.description(), Toast.LENGTH_LONG).show();
 				stopService(new Intent(ContactsActivity.this, ConnectedService.class));
 				finish();
