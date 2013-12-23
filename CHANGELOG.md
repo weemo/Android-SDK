@@ -1,28 +1,8 @@
 # Weemo Android SDK Changelog
 
-
-## 4.2.0
-
-**`18/11/2013`**
-
-
-### New Features
-
-- **SDK**: Addition of two optional methods to improve batteries life: `goToBackground` and `goToForeground`.
-- **Helper**: New Helper optimized for 10 inches tablets (the call window is now a fragment).
-
-
-### Improvements
-
-- **SDK:** Removed `activityStart` and `activityStop`.
-- **SDK:** `VideoOutPreviewFrame` now uses device orientation
-- **SDK:** Camera do not stop on background when the device supports it
-- **SDK:** `destroy` is replaced by `disconnect`
-
-
 ## 4.2.1
 
-**`19/12/2013`**
+** Dec 19 2013`**
 
 
 ### New Features
@@ -49,3 +29,20 @@
   **Description:** Connecting a new device with same credentials force the authentication, the first device could not be contacted  
   **Workaround:** Manage accounts by host application
 
+## 4.2.0
+
+** Nov 18 2013`**
+
+
+### New Features
+
+- **SDK**: Addition of two optional methods to improve battery life: `goToBackground` and `goToForeground`.
+- **Helper**: New Helper optimized for 10-inch tablets (the call window is now a fragment).
+
+
+### Improvements
+
+- **SDK:** Removed `activityStart` and `activityStop`.
+- **SDK:** `VideoOutPreviewFrame` now uses device orientation
+- **SDK:** Camera does not stop on background when the device supports it
+- **SDK:** `destroy` is replaced by `disconnect`
