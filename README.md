@@ -24,7 +24,7 @@ For implementation details, please refer to the [project wiki](https://github.co
 
 ## Get the library
 
-The libraries are located in the [lib directory](https://github.com/weemo/Android-SDK/tree/master/SDK). Note that this repository is in form of a Android library project. You don't have to use it but it can come in handy if you want to use git submodules.
+The libraries are located in the [libs directory](https://github.com/weemo/Android-SDK/tree/master/SDK/libs). Note that this repository is in form of a Android library project. You don't have to use it but it can come in handy if you want to use git submodules.
 
 ## SDK Helper
 
