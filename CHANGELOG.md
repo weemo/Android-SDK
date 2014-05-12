@@ -1,5 +1,9 @@
 # Weemo Android SDK Changelog
 
+## 5.1
+
+- libopus support
+
 ## 4.2.1
 
 **`Dec 19 2013`**
