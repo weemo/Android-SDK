@@ -1,0 +1,35 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ImageButton
+        android:id="@+id/item_speakers"
+        style="@style/weemo_video_actionbar_button"
+        android:contentDescription="@string/weemo_switch_earphones" />
+
+    <ImageButton
+        android:id="@+id/item_micro"
+        style="@style/weemo_video_actionbar_button"
+        android:contentDescription="@string/weemo_un_mute_microphone" />
+
+    <ImageButton
+        android:id="@+id/item_video"
+        style="@style/weemo_video_actionbar_button"
+        android:contentDescription="@string/weemo_toggle_video" />
+
+    <ImageButton
+        android:id="@+id/item_front_back"
+        style="@style/weemo_video_actionbar_button"
+        android:contentDescription="@string/weemo_switch_camera" />
+
+    <ImageButton
+        android:id="@+id/item_sd_hd"
+        style="@style/weemo_video_actionbar_button"
+        android:contentDescription="@string/weemo_switch_camera" />
+
+    <ImageButton
+        android:id="@+id/item_hangup"
+        style="@style/weemo_video_actionbar_button"
+        android:background="@drawable/weemo_selectable_background_red"
+        android:contentDescription="@string/weemo_hang_up"
+        android:src="@drawable/weemo_ic_action_exit_red" />
+
+</merge>

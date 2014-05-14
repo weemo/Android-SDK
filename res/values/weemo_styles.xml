@@ -1,0 +1,24 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="weemo_video_actionbar_button" parent="android:Widget.Holo.Light.ImageButton">
+        <item name="android:background">@drawable/weemo_selectable_background</item>
+        <item name="android:minHeight">70dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="weemo_call_theme" parent="@android:style/Theme.Holo.NoActionBar" />
+
+    <dimen name="weemo_callcontrols_paddingTop">0dp</dimen>
+
+    <dimen name="weemo_video_out_margin">20dp</dimen>
+    
+    <dimen name="weemo_call_control_width">380dp</dimen>
+	
+    <color name="weemo_call_control_bg">#8333</color>
+    
+</resources>

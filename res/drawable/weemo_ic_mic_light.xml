@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- activated -->
+    <item android:drawable="@drawable/weemo_ic_action_mic_muted_red" android:state_activated="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/weemo_ic_action_mic_not_muted_light" />
+
+</selector>

@@ -1,0 +1,4 @@
+<resources>
+    <bool name="isTablet">false</bool>
+    <item name="camera_correction" type="integer">90</item>
+</resources>

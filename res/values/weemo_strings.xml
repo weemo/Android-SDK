@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="weemo_switch_earphones">Switch earphones</string>
+
+    <string name="weemo_un_mute_microphone">(Un)mute microphone</string>
+
+    <string name="weemo_toggle_video">Toggle video</string>
+
+    <string name="weemo_switch_camera">Switch camera</string>
+
+    <string name="weemo_hang_up">Hang up</string>
+
+</resources>

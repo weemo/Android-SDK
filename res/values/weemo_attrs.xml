@@ -1,0 +1,8 @@
+<resources>
+   <declare-styleable name="CallControl">
+       <attr name="style" format="enum">
+           <enum name="dark" value="0"/>
+           <enum name="light" value="1"/>
+       </attr>
+   </declare-styleable>
+</resources>

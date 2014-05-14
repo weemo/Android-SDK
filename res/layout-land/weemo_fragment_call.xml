@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:weemo_cv="http://schemas.android.com/apk/res/com.weemo.sdk.helper"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CallActivity" >
+
+    <FrameLayout
+        android:id="@+id/videoframe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.weemo.sdk.view.WeemoVideoInFrame
+            android:id="@+id/video_in"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.weemo.sdk.view.WeemoVideoOutPreviewFrame
+            android:id="@+id/video_out"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="@dimen/weemo_video_out_margin" />
+    </FrameLayout>
+
+    <com.weemo.sdk.helper.call.CallControl
+        android:id="@+id/call_control"
+        weemo_cv:style="dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:animateLayoutChanges="true"
+        android:background="@color/weemo_call_control_bg"
+        android:minWidth="400dp"
+        android:paddingTop="@dimen/weemo_callcontrols_paddingTop" />
+
+</RelativeLayout>
