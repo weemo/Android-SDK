@@ -1,20 +1,20 @@
-# Weemo Android
+# Weemo Android SDK
 
-This repository contains the **Weemo Android SDK** and the **Weemo Android Helper**.  
+This repository contains the **Weemo Android SDK**.  
 More information about Weemo Android SDK can be found at [www.weemo.com](http://www.weemo.com/)
 
 Here are some other pages to help your implementation:
  - **Changelog** [here](CHANGELOG.md)
- - **Documentation** [here](http://docs.weemo.com/release/5.2/sdk/android)
+ - **Documentation** [here](http://docs.weemo.com/release/5.1/sdk/android)
 
 ## Get the library
 
-The library is located in the [SDK](SDK) folder.  
+The library is located in the [libs](libs) folder.  
 It contains the native library `armeabi-v7a/libWeemoSDK.so` and a jar file `WeemoAndroidSDK.jar`.
 
 ## Get the Helper
 
-The [Weemo Android Helper](Helper) is a demo application implementing the Weemo Android SDK.  
+The [Weemo Android Helper](https://github.com/weemo/Android-SDK-Helper) is a demo application implementing the Weemo Android SDK.  
 It demonstrate Weemo Technologies on an Android application.
 
 ## SDK Architecture
@@ -68,7 +68,7 @@ In your application's `AndroidManifest.xml` file, add the following permissions:
 
 ## General application flow
 
-1. The host application authenticates with its application server.
+1. The host application authenticates with its application server. In addition to your business use cases, the server backends gets a ```Token``` from the Weemo back office (5) and sends it to the client application.
 2. The host application creates the Weemo singleton. Every action related to the Weemo Cloud goes through Weemo objects, and every event is fired through those objects.
 3. The SDK singleton connects to our cloud. 
 4. Once connected, the application tries to authenticate the user.
@@ -121,7 +121,7 @@ A method can catch a specific event (such as above) or catch a more generic type
   public void method(WeemoCallEvent e) { /* This will catch all events related to an ongoing call */ }
 ```
 
-Refer to the [Weemo Event Bus documentation](http://docs.weemo.com/sdk/5.2/android/classcom_1_1weemo_1_1sdk_1_1event_1_1_weemo_event_bus.html) for a more thorough explanation.
+Refer to the [Weemo Event Bus documentation](http://docs.weemo.com/release/5.1/sdk/android/classcom_1_1weemo_1_1sdk_1_1event_1_1_weemo_event_bus.html) for a more thorough explanation.
 
 #### Activity or Fragment listener
 
@@ -143,6 +143,11 @@ These events can be treated:
 
 
 ## Initialization
+#### Prerequisites
+
+Make sure that your application has received a token from your backend server when starting the authentication process.
+If you use one of our Authentication Client, the code returns you a json string containing the Token.
+If you use our SDK helper that is on Github, it contains the code to retrieve a token calling directly an authentication Client stored on your backend.
 
 #### Creating Weemo Singleton
 
@@ -159,7 +164,7 @@ After a successful initialization of the Weemo Android SDK, you are ready to aut
 <p align="center"><img src="http://docs.weemo.com/img/android_auth_cf.png"></p>
 
 User authentication takes place with: `Weemo.instance().authenticate(Context ctx, String userId, UserType type)`  
-Where `type` is either `Weemo.UserType.INTERNAL` or `Weemo.UserType.EXTERNAL`.  
+Where `userId`is the token received from your backend server and `type` is either `Weemo.UserType.INTERNAL` or `Weemo.UserType.EXTERNAL`.  
 
 The authenticate method starts the authentication process.  
 Your application is notified of the authentication result with an `AuthenticatedEvent`.  
